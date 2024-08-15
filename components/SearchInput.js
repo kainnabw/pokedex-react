@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
+//onChangeText: Função de callback chamada sempre que o texto no campo de entrada muda.
 const SearchInput = ({ value, onChangeText, onSubmit }) => {
     const textoMinusculo = (text) => {
         onChangeText(text.toLowerCase());

@@ -4,8 +4,10 @@ import axios from 'axios';
 import SearchInput from './components/SearchInput';
 import SearchResults from './components/SearchResult';
 
+
+//Usa dois tipos de busca: uma busca específica por consulta e uma busca geral com paginação.
 const App = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(''); //query: Armazena o texto que o usuário digita para buscar um Pokémon específico.
   const [results, setResults] = useState([]);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
@@ -14,6 +16,7 @@ const App = () => {
   const [searchType, setSearchType] = useState('general');
 
   const fetchPokemons = async () => {
+    //Se a query estiver vazia, reseta a página e os resultados
     if (query.trim() === ''){
       setPage(1);
       setResults([])
@@ -41,11 +44,12 @@ const App = () => {
     setSearchType('general');
     
     try {
+      //Reduz a página atual em 1. 
       const offset = (page - 1) * 10;
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`);
-      const newResults = response.data.results || [];
+      const newResults = response.data.results || []; //A resposta da API 
       
-      setResults(prevResults => [...prevResults, ...newResults]);
+      setResults(prevResults => [...prevResults, ...newResults]); // Atualiza o estado results com os novos dados
       setHasMore(newResults.length > 0);
     } catch (err) {
       setError(err);
@@ -54,20 +58,20 @@ const App = () => {
       setLoading(false);
     }
   }
-
+// É utilizado para carregar e paginar uma lista de Pokémons.
   useEffect(() => {
     if (searchType === 'general') {
       fetchGeralPokemons();
       
     }
   }, [page]);
-
+   // É utilizado para buscar um Pokémon específico com base na consulta fornecida.
   useEffect(() => {
     if (searchType === 'query') {
       fetchPokemons();
     }
   }, [query]);
-
+  // Incrementa o número da página se houver mais resultados a serem carregados
   const loadMorePokemons = () => {
     if (hasMore && !loading) {
       setPage(prevPage => prevPage + 1);

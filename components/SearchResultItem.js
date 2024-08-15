@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
 const SearchResultItem = ({ item }) => {
+  //toFixed(1): Formata o número para ter uma casa decimal.
     const weightInKg = (item.weight / 10).toFixed(1);
     const heightInM = (item.height / 10).toFixed(1);
 
@@ -13,7 +14,8 @@ const SearchResultItem = ({ item }) => {
 
          <Text style={styles.details}>Weight: {weightInKg} kg</Text>
         <Text style={styles.details}>Height: {heightInM} m</Text>
-
+        
+        {/* Mapeia os tipos do Pokémon para criar um <Text> para cada tipo.  */}
         <View style={styles.typeStyle}>
          {item.types.map((typeInfo, index) => (
             <Text key={index} style={styles.type}>

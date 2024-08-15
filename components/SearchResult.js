@@ -3,8 +3,11 @@ import { FlatList, View, StyleSheet, Text, ActivityIndicator } from 'react-nativ
 import axios from 'axios';
 import SearchResultItem from './SearchResultItem';
 
+//onLoadMore: Função para carregar mais dados quando o usuário rolar para baixo.
+
 const SearchResults = ({ results, error, onLoadMore }) => {
   const [resultsPokemon, setResultsPokemon] = useState([]);
+  //resultsPokemon: Estado que armazena os detalhes dos Pokémon a serem exibidos. Inicialmente é um array vazio.
 
   useEffect(() => {
     const resultInfoPokemons = async () => {
@@ -13,8 +16,10 @@ const SearchResults = ({ results, error, onLoadMore }) => {
       const infopokemons = [];
       
       try {
+        //verifica se o objeto pokemon já possui as propriedades name e sprites
         for (const pokemon of results) {
           if (pokemon.name && pokemon.sprites) {
+            //Se a condição for verdadeira, o Pokémon é adicionado no array infopokemons 
             infopokemons.push(pokemon);
           } else {
             const response = await axios.get(pokemon.url);
